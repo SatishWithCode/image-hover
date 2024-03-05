@@ -1,0 +1,47 @@
+<!----------------- css code ------------------->
+<style>
+.image-container {
+    position: relative;
+}
+.zoomed-image {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 600px; /* Adjust the size of the zoomed image as needed */
+    height: 400px; /* Adjust the size of the zoomed image as needed */
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    display: none; /* Hide the zoomed image initially */
+}
+</style>
+
+
+
+<!----------------- html code ------------------->
+<div class="image-container">
+    <img class="original-image" src="uploads/<?php echo $product_row['prod_img']; ?>" alt="<?php echo $product_row['name']; ?>">
+</div>
+<div class="zoomed-image"></div>
+
+
+
+
+
+<!----------------- JavaScript code ------------------->
+<script>
+$(document).ready(function(){
+    $('.original-image').mouseenter(function(){
+        var zoomedImageSrc = $(this).attr('src');
+        $('.zoomed-image').css('background-image', 'url(' + zoomedImageSrc + ')');
+        $('.zoomed-image').fadeIn();
+    }).mousemove(function(e){
+        var posX = e.pageX - $(this).offset().left;
+        var posY = e.pageY - $(this).offset().top;
+        $('.zoomed-image').css('background-position', (posX * -1) + 'px ' + (posY * -1) + 'px');
+    }).mouseleave(function(){
+        $('.zoomed-image').fadeOut();
+    });
+});
+</script>
+
